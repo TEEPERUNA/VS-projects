@@ -7,6 +7,8 @@ import { Ionicons, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import MoodTrackerScreen from './screens/MoodTrackerScreen';
 import MentalHealthScreen from './screens/MentalHealthScreen';
 import GroupsScreen from './screens/GroupsScreen';
+import AppointmentsScreen from './screens/AppointmentsScreen';
+
 
 
 const Tab = createBottomTabNavigator();
@@ -71,10 +73,7 @@ function HomeScreen({ navigation }) {
   );
 }
 
-// Other Screens
-function AppointmentsScreen() {
-  return <View style={styles.center}><Text>Appointments Page</Text></View>;
-}
+
 
 
 function ProfileScreen() {
