@@ -19,6 +19,16 @@ export default function AppointmentsScreen({ navigation }) {
             <Text style={styles.actionButtonText}>Reschedule</Text>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity style={styles.confirmButton}>
+          <Ionicons name="call-outline" size={24} color="white" />
+            <Text style={styles.confirmButtonText}>Confirm Phone Appointment</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.cancelButton}>
+             <Ionicons name="close-circle-outline" size={24} color="white" />
+             <Text style={styles.cancelButtonText}>Cancel Appointment</Text>
+          </TouchableOpacity>
+          <Text style={styles.noteText}>You have 1 hour to confirm before it automatically cancels.</Text>
       </View>
 
       <Text style={styles.sectionTitle}>New Appointment</Text>
@@ -29,8 +39,15 @@ export default function AppointmentsScreen({ navigation }) {
       <Text style={styles.sectionTitle}>Chat History</Text>
       <FeatureButton title="View Past Chats" icon={<Ionicons name="chatbubbles-outline" size={28} color="purple" />} />
       <FeatureButton title="Start New Chat" icon={<Ionicons name="chatbox-ellipses-outline" size={28} color="purple" />} />
+      <Text style={styles.sectionTitle}>Chat & Phone Communication</Text>
+      <FeatureButton title="Book Chat Appointment" icon={<Ionicons name="chatbubble-ellipses-outline" size={28} color="green" />} />
+      <FeatureButton title="Leave a Message (if busy)" icon={<Ionicons name="chatbox-ellipses-outline" size={28} color="green" />} />
+      <FeatureButton title="Live Chat Queue: See Your Position" icon={<Ionicons name="time-outline" size={28} color="orange" />} />
+      <FeatureButton title="Manage SMS/Email Reminders" icon={<Ionicons name="notifications-outline" size={28} color="purple" />} />
     </ScrollView>
   );
+
+  
 }
 
 function FeatureButton({ icon, title }) {
@@ -105,4 +122,62 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  confirmButton: {
+    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'green',
+    padding: 12,
+    borderRadius: 10,
+  },
+  confirmButtonText: {
+    marginLeft: 10,
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  noteText: {
+    marginTop: 10,
+    fontSize: 14,
+    color: 'gray',
+    fontStyle: 'italic',
+  },
+  confirmButton: {
+    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'green',
+    padding: 12,
+    borderRadius: 10,
+  },
+  confirmButtonText: {
+    marginLeft: 10,
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  cancelButton: {
+    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'red',
+    padding: 12,
+    borderRadius: 10,
+  },
+  cancelButtonText: {
+    marginLeft: 10,
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  noteText: {
+    marginTop: 10,
+    fontSize: 14,
+    color: 'gray',
+    fontStyle: 'italic',
+  },
+  
 });
