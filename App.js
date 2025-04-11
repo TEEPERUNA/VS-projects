@@ -4,7 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
-import MoodTrackerScreen from './screens/MoodTrackerScreen'; // 👈 Make sure this exists!
+import MoodTrackerScreen from './screens/MoodTrackerScreen';
+import MentalHealthScreen from './screens/MentalHealthScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -15,7 +16,7 @@ function HomeScreen({ navigation }) {
     <View style={styles.container}>
       {/* Top Bar */}
       <View style={styles.topBar}>
-        <Ionicons name="language-outline" size={24} color="black" />
+        <Ionicons name="mail-outline" size={24} color="black" />
         <View style={styles.languageButtons}>
           <TouchableOpacity><Text style={styles.languageText}>FI</Text></TouchableOpacity>
           <TouchableOpacity><Text style={styles.languageText}>SV</Text></TouchableOpacity>
@@ -33,6 +34,11 @@ function HomeScreen({ navigation }) {
             icon={<FontAwesome5 name="smile" size={28} color="blue" />} 
             title="Mood Tracker" 
             onPress={() => navigation.navigate('MoodTracker')}
+          />
+          <FeatureButton 
+            icon={<MaterialIcons name="assignment" size={28} color="blue" />} 
+            title="Forms"
+            // (Later you can add onPress={() => navigation.navigate('Forms')} if you want to create a Forms page!)
           />
         </View>
 
@@ -67,9 +73,6 @@ function AppointmentsScreen() {
   return <View style={styles.center}><Text>Appointments Page</Text></View>;
 }
 
-function MentalHealthScreen() {
-  return <View style={styles.center}><Text>Mental Health Hub</Text></View>;
-}
 
 function GroupsScreen() {
   return <View style={styles.center}><Text>Groups Page</Text></View>;
