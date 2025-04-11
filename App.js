@@ -1,12 +1,16 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import { Ionicons, FontAwesome5, MaterialIcons, Entypo } from '@expo/vector-icons';
+import { Ionicons, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
+import MoodTrackerScreen from './screens/MoodTrackerScreen'; // 👈 Make sure this exists!
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-function HomeScreen() {
+// Home Screen
+function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       {/* Top Bar */}
@@ -23,9 +27,13 @@ function HomeScreen() {
       <ScrollView contentContainerStyle={styles.mainContent}>
         <Text style={styles.title}>Welcome!</Text>
         <View style={styles.grid}>
-          <FeatureButton icon={<FontAwesome5 name="calendar-plus" size={28} color="green" />} title="Book Appointment" />
-          <FeatureButton icon={<Ionicons name="chatbubble-ellipses-outline" size={28} color="green" />} title="Start Chat" />
-          <FeatureButton icon={<FontAwesome5 name="smile" size={28} color="green" />} title="Mood Tracker" />
+          <FeatureButton icon={<FontAwesome5 name="calendar-plus" size={28} color="blue" />} title="Book Appointment" />
+          <FeatureButton icon={<Ionicons name="chatbubble-ellipses-outline" size={28} color="blue" />} title="Start Chat" />
+          <FeatureButton 
+            icon={<FontAwesome5 name="smile" size={28} color="blue" />} 
+            title="Mood Tracker" 
+            onPress={() => navigation.navigate('MoodTracker')}
+          />
         </View>
 
         <Text style={styles.subtitle}>Upcoming Appointment</Text>
@@ -54,36 +62,40 @@ function HomeScreen() {
   );
 }
 
+// Other Screens
 function AppointmentsScreen() {
-  return (
-    <View style={styles.center}><Text>Appointments Page</Text></View>
-  );
+  return <View style={styles.center}><Text>Appointments Page</Text></View>;
 }
 
 function MentalHealthScreen() {
-  return (
-    <View style={styles.center}><Text>Mental Health Hub</Text></View>
-  );
+  return <View style={styles.center}><Text>Mental Health Hub</Text></View>;
 }
 
 function GroupsScreen() {
-  return (
-    <View style={styles.center}><Text>Groups Page</Text></View>
-  );
+  return <View style={styles.center}><Text>Groups Page</Text></View>;
 }
 
 function ProfileScreen() {
   return (
     <ScrollView contentContainerStyle={styles.profileContainer}>
       <Text style={styles.profileTitle}>My Profile</Text>
-
-      <ProfileButton icon={<Ionicons name="person-circle-outline" size={28} color="green" />} title="My Information" />
-      <ProfileButton icon={<FontAwesome5 name="pills" size={24} color="green" />} title="Prescriptions" />
-      <ProfileButton icon={<FontAwesome5 name="stethoscope" size={24} color="green" />} title="Examinations" />
-      <ProfileButton icon={<MaterialIcons name="assignment-turned-in" size={28} color="green" />} title="Referrals" />
-      <ProfileButton icon={<FontAwesome5 name="syringe" size={24} color="green" />} title="Vaccinations" />
-      <ProfileButton icon={<Ionicons name="document-text-outline" size={28} color="green" />} title="Documents" />
+      <ProfileButton icon={<Ionicons name="person-circle-outline" size={28} color="blue" />} title="My Information" />
+      <ProfileButton icon={<FontAwesome5 name="pills" size={24} color="blue" />} title="Prescriptions" />
+      <ProfileButton icon={<FontAwesome5 name="stethoscope" size={24} color="blue" />} title="Examinations" />
+      <ProfileButton icon={<MaterialIcons name="assignment-turned-in" size={28} color="blue" />} title="Referrals" />
+      <ProfileButton icon={<FontAwesome5 name="syringe" size={24} color="blue" />} title="Vaccinations" />
+      <ProfileButton icon={<Ionicons name="document-text-outline" size={28} color="blue" />} title="Documents" />
     </ScrollView>
+  );
+}
+
+// Button Components
+function FeatureButton({ icon, title, onPress }) {
+  return (
+    <TouchableOpacity style={styles.featureButton} onPress={onPress}>
+      {icon}
+      <Text style={styles.featureText}>{title}</Text>
+    </TouchableOpacity>
   );
 }
 
@@ -96,29 +108,57 @@ function ProfileButton({ icon, title }) {
   );
 }
 
-function FeatureButton({ icon, title }) {
+// Bottom Tabs
+function MainTabs() {
   return (
-    <TouchableOpacity style={styles.featureButton}>
-      {icon}
-      <Text style={styles.featureText}>{title}</Text>
-    </TouchableOpacity>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = 'home-outline';
+          } else if (route.name === 'Appointments') {
+            iconName = 'calendar-outline';
+          } else if (route.name === 'Mental Health') {
+            iconName = 'heart-outline';
+          } else if (route.name === 'Groups') {
+            iconName = 'people-outline';
+          } else if (route.name === 'Profile') {
+            iconName = 'person-outline';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: 'blue',
+        tabBarInactiveTintColor: 'gray',
+      })}
+    >
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Appointments" component={AppointmentsScreen} />
+      <Tab.Screen name="Mental Health" component={MentalHealthScreen} />
+      <Tab.Screen name="Groups" component={GroupsScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
+    </Tab.Navigator>
   );
 }
 
+// App
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarIcon: ({ color }) => (<Ionicons name="home-outline" size={24} color={color} />) }} />
-        <Tab.Screen name="Appointments" component={AppointmentsScreen} options={{ tabBarIcon: ({ color }) => (<FontAwesome5 name="calendar-check" size={22} color={color} />) }} />
-        <Tab.Screen name="Mental Health" component={MentalHealthScreen} options={{ tabBarIcon: ({ color }) => (<Ionicons name="happy-outline" size={24} color={color} />) }} />
-        <Tab.Screen name="Groups" component={GroupsScreen} options={{ tabBarIcon: ({ color }) => (<FontAwesome5 name="users" size={24} color={color} />) }} />
-        <Tab.Screen name="Profile" component={ProfileScreen} options={{ tabBarIcon: ({ color }) => (<Ionicons name="person-outline" size={24} color={color} />) }} />
-      </Tab.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Main">
+          {() => <MainTabs />}
+        </Stack.Screen>
+        <Stack.Screen name="MoodTracker" component={MoodTrackerScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
+// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -176,7 +216,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   card: {
-    backgroundColor: '#e0f7e9',
+    backgroundColor: '#f0f0f0',
     padding: 15,
     borderRadius: 10,
     marginBottom: 10,
@@ -189,7 +229,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 90,
     right: 20,
-    backgroundColor: '#34D399',
+    backgroundColor: 'blue',
     padding: 18,
     borderRadius: 50,
     elevation: 5,
@@ -230,5 +270,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-  
 });
