@@ -8,6 +8,8 @@ import MoodTrackerScreen from './screens/MoodTrackerScreen';
 import MentalHealthScreen from './screens/MentalHealthScreen';
 import GroupsScreen from './screens/GroupsScreen';
 import AppointmentsScreen from './screens/AppointmentsScreen';
+import ProfileScreen from './screens/ProfileScreen';
+
 
 
 
@@ -73,22 +75,6 @@ function HomeScreen({ navigation }) {
   );
 }
 
-
-
-
-function ProfileScreen() {
-  return (
-    <ScrollView contentContainerStyle={styles.profileContainer}>
-      <Text style={styles.profileTitle}>My Profile</Text>
-      <ProfileButton icon={<Ionicons name="person-circle-outline" size={28} color="blue" />} title="My Information" />
-      <ProfileButton icon={<FontAwesome5 name="pills" size={24} color="blue" />} title="Prescriptions" />
-      <ProfileButton icon={<FontAwesome5 name="stethoscope" size={24} color="blue" />} title="Examinations" />
-      <ProfileButton icon={<MaterialIcons name="assignment-turned-in" size={28} color="blue" />} title="Referrals" />
-      <ProfileButton icon={<FontAwesome5 name="syringe" size={24} color="blue" />} title="Vaccinations" />
-      <ProfileButton icon={<Ionicons name="document-text-outline" size={28} color="blue" />} title="Documents" />
-    </ScrollView>
-  );
-}
 
 // Button Components
 function FeatureButton({ icon, title, onPress }) {
