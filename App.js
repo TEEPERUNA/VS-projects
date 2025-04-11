@@ -2,10 +2,12 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
 import { Ionicons, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import MoodTrackerScreen from './screens/MoodTrackerScreen';
 import MentalHealthScreen from './screens/MentalHealthScreen';
+import GroupsScreen from './screens/GroupsScreen';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -23,6 +25,7 @@ function HomeScreen({ navigation }) {
           <TouchableOpacity><Text style={styles.languageText}>EN</Text></TouchableOpacity>
         </View>
       </View>
+      <Image source={require('./assets/yths.png')} style={styles.logo} />
 
       {/* Main Content */}
       <ScrollView contentContainerStyle={styles.mainContent}>
@@ -73,10 +76,6 @@ function AppointmentsScreen() {
   return <View style={styles.center}><Text>Appointments Page</Text></View>;
 }
 
-
-function GroupsScreen() {
-  return <View style={styles.center}><Text>Groups Page</Text></View>;
-}
 
 function ProfileScreen() {
   return (
@@ -273,4 +272,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  logo: {
+    width: 200,
+    height: 48,
+    resizeMode: 'contain',
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  
 });
