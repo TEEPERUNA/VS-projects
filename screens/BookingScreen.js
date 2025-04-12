@@ -1,22 +1,34 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useNavigation } from '@react-navigation/native';  // << Need this!
 
 export default function BookingScreen() {
+  const navigation = useNavigation(); // << We'll navigate back to Home
   const [step, setStep] = useState(1); // 1: choose service, 2: pick date, 3: pick doctor
   const [selectedService, setSelectedService] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleServiceSelect = (service) => {
     setSelectedService(service);
-    setStep(2);  // Go to date selection
+    setStep(2); // Go to date selection
   };
 
   const handleDateChange = (event, date) => {
     if (date) {
       setSelectedDate(date);
-      setStep(3);  // After picking date, move to doctors
+      setStep(3); // After picking date, move to doctors
     }
+  };
+
+  // Pressing a doctor => Return to Home
+  const handleDoctorPress = (doctorInfo) => {
+    console.log('Booked appointment with:', doctorInfo);
+
+    // Navigate back to Home screen inside Main tabs
+    navigation.navigate('Main', {
+      screen: 'Home',
+    });
   };
 
   return (
@@ -51,10 +63,12 @@ export default function BookingScreen() {
       {step === 3 && (
         <>
           <Text style={styles.title}>Available Doctors on {selectedDate.toDateString()}</Text>
-          <TouchableOpacity style={styles.button}>
+
+          {/* Pressing these => go back to Home */}
+          <TouchableOpacity style={styles.button} onPress={() => handleDoctorPress('Dr. Smith (10:00 AM)')}>
             <Text style={styles.buttonText}>Dr. Smith (10:00 AM)</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={() => handleDoctorPress('Dr. Johnson (11:30 AM)')}>
             <Text style={styles.buttonText}>Dr. Johnson (11:30 AM)</Text>
           </TouchableOpacity>
         </>

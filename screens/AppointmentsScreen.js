@@ -1,10 +1,11 @@
 import React from 'react';
 import { ScrollView, Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';  // 👈 ADD THIS
+import { useNavigation } from '@react-navigation/native';
+import { FontAwesome5 } from '@expo/vector-icons'; // Make sure you import FontAwesome5 if you haven't
 
 export default function AppointmentsScreen() {
-  const navigation = useNavigation(); // 👈 ADD THIS
+  const navigation = useNavigation();
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -38,39 +39,76 @@ export default function AppointmentsScreen() {
         </Text>
       </View>
 
+      {/* NEW APPOINTMENT SECTION */}
       <Text style={styles.sectionTitle}>New Appointment</Text>
-      <FeatureButton title="Book Medical Appointment" icon={<Ionicons name="medkit-outline" size={28} color="blue" />} />
-      <FeatureButton title="Book Dental Appointment" icon={<Ionicons name="happy-outline" size={28} color="blue" />} />
-      <FeatureButton title="Book Mental Health Appointment" icon={<Ionicons name="heart-outline" size={28} color="blue" />} />
+
+      {/* BUTTON FOR BOOKING SCREEN */}
+      <FeatureButton
+        icon={<FontAwesome5 name="calendar-plus" size={28} color="blue" />}
+        title="Book Appointment"
+        onPress={() => navigation.navigate('Booking')}
+      />
+
+      {/* OPTIONAL EXISTING BUTTONS */}
+      <FeatureButton
+        title="Book Medical Appointment"
+        icon={<Ionicons name="medkit-outline" size={28} color="blue" />}
+      />
+      <FeatureButton
+        title="Book Dental Appointment"
+        icon={<Ionicons name="happy-outline" size={28} color="blue" />}
+      />
+      <FeatureButton
+        title="Book Mental Health Appointment"
+        icon={<Ionicons name="heart-outline" size={28} color="blue" />}
+      />
 
       <Text style={styles.sectionTitle}>Chat History</Text>
-      <FeatureButton title="View Past Chats" icon={<Ionicons name="chatbubbles-outline" size={28} color="purple" />} />
-      <FeatureButton title="Start New Chat" icon={<Ionicons name="chatbox-ellipses-outline" size={28} color="purple" />} />
+      <FeatureButton
+        title="View Past Chats"
+        icon={<Ionicons name="chatbubbles-outline" size={28} color="purple" />}
+      />
+      <FeatureButton
+        title="Start New Chat"
+        icon={<Ionicons name="chatbox-ellipses-outline" size={28} color="purple" />}
+      />
 
       <Text style={styles.sectionTitle}>Chat & Phone Communication</Text>
-      <FeatureButton title="Book Chat Appointment" icon={<Ionicons name="chatbubble-ellipses-outline" size={28} color="green" />} />
-      <FeatureButton title="Leave a Message (if busy)" icon={<Ionicons name="chatbox-ellipses-outline" size={28} color="green" />} />
-      <FeatureButton title="Live Chat Queue: See Your Position" icon={<Ionicons name="time-outline" size={28} color="orange" />} />
-      <FeatureButton title="Manage SMS/Email Reminders" icon={<Ionicons name="notifications-outline" size={28} color="purple" />} />
+      <FeatureButton
+        title="Book Chat Appointment"
+        icon={<Ionicons name="chatbubble-ellipses-outline" size={28} color="green" />}
+      />
+      <FeatureButton
+        title="Leave a Message (if busy)"
+        icon={<Ionicons name="chatbox-ellipses-outline" size={28} color="green" />}
+      />
+      <FeatureButton
+        title="Live Chat Queue: See Your Position"
+        icon={<Ionicons name="time-outline" size={28} color="orange" />}
+      />
+      <FeatureButton
+        title="Manage SMS/Email Reminders"
+        icon={<Ionicons name="notifications-outline" size={28} color="purple" />}
+      />
 
-      {/* 🔥 Log Out Button */}
+      {/* Log Out Button */}
       <TouchableOpacity style={styles.logoutButton} onPress={() => navigation.replace('Login')}>
         <Ionicons name="log-out-outline" size={24} color="white" />
         <Text style={styles.logoutButtonText}>Log Out</Text>
       </TouchableOpacity>
-
     </ScrollView>
   );
 }
 
-function FeatureButton({ title, icon }) {
+function FeatureButton({ title, icon, onPress }) {
   return (
-    <TouchableOpacity style={styles.featureButton}>
+    <TouchableOpacity style={styles.featureButton} onPress={onPress}>
       {icon}
       <Text style={styles.featureButtonText}>{title}</Text>
     </TouchableOpacity>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
