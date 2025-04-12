@@ -9,6 +9,7 @@ import MentalHealthScreen from './screens/MentalHealthScreen';
 import GroupsScreen from './screens/GroupsScreen';
 import AppointmentsScreen from './screens/AppointmentsScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import LoginScreen from './screens/LoginScreen';
 
 
 
@@ -136,9 +137,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Main">
-          {() => <MainTabs />}
-        </Stack.Screen>
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Main" component={MainTabs} />
         <Stack.Screen name="MoodTracker" component={MoodTrackerScreen} />
       </Stack.Navigator>
     </NavigationContainer>
