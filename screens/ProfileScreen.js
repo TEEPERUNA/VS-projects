@@ -1,8 +1,11 @@
 import React from 'react';
 import { ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-export default function ProfileScreen({ navigation }) {
+export default function ProfileScreen() {
+  const navigation = useNavigation();
+
   return (
     <ScrollView contentContainerStyle={styles.profileContainer}>
       <Text style={styles.profileTitle}>My Profile</Text>
@@ -21,9 +24,16 @@ export default function ProfileScreen({ navigation }) {
       <ProfileButton icon={<Ionicons name="eye-off-outline" size={28} color="purple" />} title="Privacy Controls" />
       <ProfileButton icon={<Ionicons name="accessibility-outline" size={28} color="purple" />} title="Accessibility Settings" />
       <ProfileButton icon={<Ionicons name="notifications-outline" size={28} color="purple" />} title="Language & Notifications" />
+
+      {/* Logout Button */}
+      <TouchableOpacity style={styles.logoutButton} onPress={() => navigation.replace('Login')}>
+        <Ionicons name="log-out-outline" size={24} color="white" />
+        <Text style={styles.logoutButtonText}>Log Out</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
+
 
 function ProfileButton({ icon, title }) {
   return (
@@ -67,5 +77,30 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 16,
     fontWeight: '600',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  logoutButton: {
+    marginTop: 20,
+    flexDirection: 'row',
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  logoutText: {
+    color: 'white',
+    fontWeight: 'bold',
+    marginLeft: 10,
+    fontSize: 16,
   },
 });

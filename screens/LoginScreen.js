@@ -3,32 +3,35 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function LoginScreen({ navigation }) {
-  return (
-    <View style={styles.container}>
-      {/* Logo or App Name */}
-      <Image source={require('../assets/yths.png')} style={styles.logo} />
-      
-      <Text style={styles.title}>Login to YTHS App</Text>
 
-      {/* Suomi.fi Login Button */}
-      <TouchableOpacity style={styles.suomiButton}>
-        <Ionicons name="shield-checkmark-outline" size={24} color="white" />
-        <Text style={styles.buttonText}>Login with Suomi.fi</Text>
-      </TouchableOpacity>
-
-      {/* Haka Login Button */}
-      <TouchableOpacity style={styles.hakaButton}>
-        <Ionicons name="school-outline" size={24} color="white" />
-        <Text style={styles.buttonText}>Login with Haka ID</Text>
-      </TouchableOpacity>
-
-      {/* Help Link */}
-      <TouchableOpacity style={styles.helpButton}>
-        <Text style={styles.helpText}>No credentials? Request help here</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
+    const handleLogin = (fullAccess) => {
+      navigation.replace('Main', { fullAccess });
+    };
+  
+    return (
+      <View style={styles.container}>
+        <Image source={require('../assets/yths.png')} style={styles.logo} />
+        <Text style={styles.title}>Login to YTHS App</Text>
+  
+        {/* Suomi.fi Button (Full access) */}
+        <TouchableOpacity style={styles.suomiButton} onPress={() => handleLogin(true)}>
+          <Ionicons name="shield-checkmark-outline" size={24} color="white" />
+          <Text style={styles.buttonText}>Login with Suomi.fi</Text>
+        </TouchableOpacity>
+  
+        {/* Haka Button (Limited access) */}
+        <TouchableOpacity style={styles.hakaButton} onPress={() => handleLogin(false)}>
+          <Ionicons name="school-outline" size={24} color="white" />
+          <Text style={styles.buttonText}>Login with Haka ID</Text>
+        </TouchableOpacity>
+  
+        <TouchableOpacity style={styles.helpButton}>
+          <Text style={styles.helpText}>No credentials? Request help here</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+  
 
 const styles = StyleSheet.create({
   container: {

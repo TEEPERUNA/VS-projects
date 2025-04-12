@@ -97,7 +97,9 @@ function ProfileButton({ icon, title }) {
 }
 
 // Bottom Tabs
-function MainTabs() {
+function MainTabs({ route }) {
+  const { fullAccess } = route.params;  // 👈 get fullAccess from LoginScreen
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -123,14 +125,22 @@ function MainTabs() {
         tabBarInactiveTintColor: 'gray',
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
+      {/* Always show Appointments */}
       <Tab.Screen name="Appointments" component={AppointmentsScreen} />
-      <Tab.Screen name="Mental Health" component={MentalHealthScreen} />
-      <Tab.Screen name="Groups" component={GroupsScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+
+      {/* Show these only if fullAccess */}
+      {fullAccess && (
+        <>
+          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Mental Health" component={MentalHealthScreen} />
+          <Tab.Screen name="Groups" component={GroupsScreen} />
+          <Tab.Screen name="Profile" component={ProfileScreen} />
+        </>
+      )}
     </Tab.Navigator>
   );
 }
+
 
 // App
 export default function App() {
@@ -139,6 +149,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Main" component={MainTabs} />
+
         <Stack.Screen name="MoodTracker" component={MoodTrackerScreen} />
       </Stack.Navigator>
     </NavigationContainer>
