@@ -10,6 +10,7 @@ import GroupsScreen from './screens/GroupsScreen';
 import AppointmentsScreen from './screens/AppointmentsScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import LoginScreen from './screens/LoginScreen';
+import BookingScreen from './screens/BookingScreen';
 
 
 
@@ -36,7 +37,11 @@ function HomeScreen({ navigation }) {
       <ScrollView contentContainerStyle={styles.mainContent}>
         <Text style={styles.title}>Welcome!</Text>
         <View style={styles.grid}>
-          <FeatureButton icon={<FontAwesome5 name="calendar-plus" size={28} color="blue" />} title="Book Appointment" />
+        <FeatureButton 
+           icon={<FontAwesome5 name="calendar-plus" size={28} color="blue" />} 
+           title="Book Appointment"
+           onPress={() => navigation.navigate('Booking')}
+        />
           <FeatureButton icon={<Ionicons name="chatbubble-ellipses-outline" size={28} color="blue" />} title="Start Chat" />
           <FeatureButton 
             icon={<FontAwesome5 name="smile" size={28} color="blue" />} 
@@ -125,18 +130,21 @@ function MainTabs({ route }) {
         tabBarInactiveTintColor: 'gray',
       })}
     >
-      {/* Always show Appointments */}
-      <Tab.Screen name="Appointments" component={AppointmentsScreen} />
-
-      {/* Show these only if fullAccess */}
-      {fullAccess && (
-        <>
-          <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Mental Health" component={MentalHealthScreen} />
-          <Tab.Screen name="Groups" component={GroupsScreen} />
-          <Tab.Screen name="Profile" component={ProfileScreen} />
-        </>
-      )}
+  {fullAccess ? (
+  <>
+    {/* Full Access Users see Home first */}
+    <Tab.Screen name="Home" component={HomeScreen} />
+    <Tab.Screen name="Appointments" component={AppointmentsScreen} />
+    <Tab.Screen name="Mental Health" component={MentalHealthScreen} />
+    <Tab.Screen name="Groups" component={GroupsScreen} />
+    <Tab.Screen name="Profile" component={ProfileScreen} />
+  </>
+) : (
+  <>
+    {/* Limited Access: Only Appointments */}
+    <Tab.Screen name="Appointments" component={AppointmentsScreen} />
+  </>
+  )}
     </Tab.Navigator>
   );
 }
@@ -149,8 +157,8 @@ export default function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Main" component={MainTabs} />
-
         <Stack.Screen name="MoodTracker" component={MoodTrackerScreen} />
+        <Stack.Screen name="Booking" component={BookingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
